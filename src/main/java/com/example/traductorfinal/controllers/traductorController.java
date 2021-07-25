@@ -1,8 +1,6 @@
 package com.example.traductorfinal.controllers;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import com.example.traductorfinal.services.Conector;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -16,10 +14,14 @@ public class traductorController {
         return "almacenamientoJson";
     }
 
-    @PostMapping(value = "/traducir")
+    @PostMapping(value = "/cadena")
     public String saveAll(@RequestBody String consola) {
 
-        return consola.toString();
+        System.out.println(consola);
+        Conector enlace = new Conector();
+        String s = enlace.traducir(consola);
+        System.out.println(s);
+        return s;
     }
 
 }
