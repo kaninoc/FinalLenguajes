@@ -13,30 +13,39 @@ command : gramar_excecution
         | execution_control
         | variables_expressions
         | arithmetic_logic
+        | files
         ;
 
 //GRAMMAR AND EXCECUTION
 gramar_excecution: dash
                  | echo
                  | read
+                 | sleep
+                 | cat
                  | comments
                  | comment_lines
                  ;
 //dash
 dash: dash1 dash2 END_OF_LINE?;
-dash1: 'dash' dashargs*;
+dash1: 'bash' dashargs*;
 dash2: (FILENAME | '\'' command '\'')?;
 dashargs: arg=('-c' | '-a' | '-s');
 
 //echo
 echo: PR_echo END_OF_LINE?;
 
-//comments
-comments: COMMENT;
-comment_lines: COMMENT_MUL;
-
 //read
 read: PR_read ID END_OF_LINE?;
+
+//sleep
+sleep: PR_sleep NUMERO END_OF_LINE?;
+
+//cat
+cat: PR_cat GT? FILENAME END_OF_LINE?;
+
+//comments
+comments: COMMENT END_OF_LINE?;
+comment_lines: COMMENT_MUL;
 
 //VARIABLES AND EXPRESSIONS
 variables_expressions: var
@@ -92,7 +101,6 @@ arit_expr:    NEG arit_expr                                                     
 execution_control: b_if
                  | b_while
                  | b_for
-                 | b_until
                  ;
 //if
 b_if: if1 if2 if3 if4;
@@ -109,22 +117,39 @@ while1: PR_while L_SQUAREBR command R_SQUAREBR SEMIC END_OF_LINE;
 while2: PR_do END_OF_LINE command+ PR_done END_OF_LINE?;
 
 //for
-b_for: PR_for L_BR L_BR expr SEMIC expr SeMIC expr R_BR R_BR
-       PR_do command SEMIC
-       PR_done
-       ;
-expr: command; //esto toca arreglarlo lol
-//until
-b_until: PR_until L_SQUAREBR command R_SQUAREBR SEMIC
-         PR_do command SEMIC
-         PR_done
-         ;
+b_for: for1 for2 for3 for4;
+for1: PR_for L_BR L_BR expr SEMIC;
+for2: expr SEMIC;
+for3: expr R_BR R_BR END_OF_LINE;
+for4: PR_do END_OF_LINE command* PR_done END_OF_LINE?;
 
-//EXCEPTIONS
-//CONCURRENCY
-//STREAMS
+expr: command
+    |
+    ; //esto toca arreglarlo lol,
+    // en general lo que se admite en los bucles/condicionales :/
+
 //FILES
+files: touch
+     | file_size
+     | copy_rename
+     | remove
+     ;
+
+//touch
+touch: PR_touch FILENAME END_OF_LINE?;
+
+//filezise
+file_size: PR_file_ls FILENAME END_OF_LINE?;
+
+//copy or rename file
+copy_rename: opt=('cp' | 'mv') FILENAME FILENAME END_OF_LINE?;
+
+//remove file
+remove: PR_remove FILENAME END_OF_LINE?;
+//el token FILENAME DEBE emparejar tambien rutas de archivos
+
 //DIRECTORIES
+
 //PROCESSES AND ENVIRONMENT
 //LIBRARIES AND NAMESPACES
 //REFLECTION
@@ -200,6 +225,11 @@ PR_false: 'false';
 PR_null: '\'\'';
 PR_echo: 'echo' ~[\n]*;
 PR_read: 'read';
+PR_sleep: 'sleep';
+PR_cat: 'cat';
+PR_touch: 'touch';
+PR_file_ls:'ls -l';
+PR_remove:'rm';
 END_OF_LINE: [\n];
 
 //REGLAS LEXICAS (Poner más arriba las reglas menos genericas o que menos matches tienen)
@@ -212,7 +242,7 @@ ID: [a-zA-Z][a-zA-Z0-9_]*;
 FILENAME: [a-zA-Z][a-zA-Z0-9_]*[.][a-zA-Z0-9]+;
 SQ_WORD: '\'' ( '\\"' | . )*? '\'' ;
 DQ_WORD: '"' ( '\\"' | . )*? '"' ;
-COMMENT: '#' ~[\r]*;
+COMMENT: '#' ~[\r\n]*;
 COMMENT_MUL: '<<EOF' (.)*? 'EOF';
 WS		: [ \t\r]+ -> skip ;
 //DIFF: ~[\n]*;

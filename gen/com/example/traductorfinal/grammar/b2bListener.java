@@ -88,6 +88,36 @@ public interface b2bListener extends ParseTreeListener {
 	 */
 	void exitEcho(b2bParser.EchoContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link b2bParser#read}.
+	 * @param ctx the parse tree
+	 */
+	void enterRead(b2bParser.ReadContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link b2bParser#read}.
+	 * @param ctx the parse tree
+	 */
+	void exitRead(b2bParser.ReadContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link b2bParser#sleep}.
+	 * @param ctx the parse tree
+	 */
+	void enterSleep(b2bParser.SleepContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link b2bParser#sleep}.
+	 * @param ctx the parse tree
+	 */
+	void exitSleep(b2bParser.SleepContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link b2bParser#cat}.
+	 * @param ctx the parse tree
+	 */
+	void enterCat(b2bParser.CatContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link b2bParser#cat}.
+	 * @param ctx the parse tree
+	 */
+	void exitCat(b2bParser.CatContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link b2bParser#comments}.
 	 * @param ctx the parse tree
 	 */
@@ -107,16 +137,6 @@ public interface b2bListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitComment_lines(b2bParser.Comment_linesContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link b2bParser#read}.
-	 * @param ctx the parse tree
-	 */
-	void enterRead(b2bParser.ReadContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link b2bParser#read}.
-	 * @param ctx the parse tree
-	 */
-	void exitRead(b2bParser.ReadContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link b2bParser#variables_expressions}.
 	 * @param ctx the parse tree
@@ -308,6 +328,46 @@ public interface b2bListener extends ParseTreeListener {
 	 */
 	void exitB_for(b2bParser.B_forContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link b2bParser#for1}.
+	 * @param ctx the parse tree
+	 */
+	void enterFor1(b2bParser.For1Context ctx);
+	/**
+	 * Exit a parse tree produced by {@link b2bParser#for1}.
+	 * @param ctx the parse tree
+	 */
+	void exitFor1(b2bParser.For1Context ctx);
+	/**
+	 * Enter a parse tree produced by {@link b2bParser#for2}.
+	 * @param ctx the parse tree
+	 */
+	void enterFor2(b2bParser.For2Context ctx);
+	/**
+	 * Exit a parse tree produced by {@link b2bParser#for2}.
+	 * @param ctx the parse tree
+	 */
+	void exitFor2(b2bParser.For2Context ctx);
+	/**
+	 * Enter a parse tree produced by {@link b2bParser#for3}.
+	 * @param ctx the parse tree
+	 */
+	void enterFor3(b2bParser.For3Context ctx);
+	/**
+	 * Exit a parse tree produced by {@link b2bParser#for3}.
+	 * @param ctx the parse tree
+	 */
+	void exitFor3(b2bParser.For3Context ctx);
+	/**
+	 * Enter a parse tree produced by {@link b2bParser#for4}.
+	 * @param ctx the parse tree
+	 */
+	void enterFor4(b2bParser.For4Context ctx);
+	/**
+	 * Exit a parse tree produced by {@link b2bParser#for4}.
+	 * @param ctx the parse tree
+	 */
+	void exitFor4(b2bParser.For4Context ctx);
+	/**
 	 * Enter a parse tree produced by {@link b2bParser#expr}.
 	 * @param ctx the parse tree
 	 */
@@ -318,13 +378,53 @@ public interface b2bListener extends ParseTreeListener {
 	 */
 	void exitExpr(b2bParser.ExprContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link b2bParser#b_until}.
+	 * Enter a parse tree produced by {@link b2bParser#files}.
 	 * @param ctx the parse tree
 	 */
-	void enterB_until(b2bParser.B_untilContext ctx);
+	void enterFiles(b2bParser.FilesContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link b2bParser#b_until}.
+	 * Exit a parse tree produced by {@link b2bParser#files}.
 	 * @param ctx the parse tree
 	 */
-	void exitB_until(b2bParser.B_untilContext ctx);
+	void exitFiles(b2bParser.FilesContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link b2bParser#touch}.
+	 * @param ctx the parse tree
+	 */
+	void enterTouch(b2bParser.TouchContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link b2bParser#touch}.
+	 * @param ctx the parse tree
+	 */
+	void exitTouch(b2bParser.TouchContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link b2bParser#file_size}.
+	 * @param ctx the parse tree
+	 */
+	void enterFile_size(b2bParser.File_sizeContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link b2bParser#file_size}.
+	 * @param ctx the parse tree
+	 */
+	void exitFile_size(b2bParser.File_sizeContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link b2bParser#copy_rename}.
+	 * @param ctx the parse tree
+	 */
+	void enterCopy_rename(b2bParser.Copy_renameContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link b2bParser#copy_rename}.
+	 * @param ctx the parse tree
+	 */
+	void exitCopy_rename(b2bParser.Copy_renameContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link b2bParser#remove}.
+	 * @param ctx the parse tree
+	 */
+	void enterRemove(b2bParser.RemoveContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link b2bParser#remove}.
+	 * @param ctx the parse tree
+	 */
+	void exitRemove(b2bParser.RemoveContext ctx);
 }
