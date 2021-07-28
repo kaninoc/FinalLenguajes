@@ -68,46 +68,27 @@ public class Listener extends b2bBaseListener {
     }
 
     @Override
-    public void enterDash(b2bParser.DashContext ctx) {
-        if(ctx.dash1() != null){
-            cadena += "powershell ";
+    public void enterBash(b2bParser.BashContext ctx) {
+        if(ctx.PR_bash() != null){
+            String bash = ctx.PR_bash().getText();
+            String[] bashh = bash.split(" ");
+            bashh[0] = "powershell";
+            bashh[1] = ".\\" + bashh[1].substring(0, bashh[1].length() - 2) + "cmd";
+            //bashh[1] = ".\\" + bashh[1];
+            bashh[3] = ".\\" + bashh[3];
+            bashh[4] = ".\\" + bashh[4];
+            cadena += bashh[0];
+            for(int i = 1; i < bashh.length; i++){
+                bashh[i] = bashh[i].replace('/', '\\');
+                cadena += " " + bashh[i];
+            }
         }
     }
 
     @Override
-    public void exitDash(b2bParser.DashContext ctx) {
+    public void exitBash(b2bParser.BashContext ctx) {
         if(ctx.END_OF_LINE() != null){
             cadena += "\n";
-        }
-    }
-
-    @Override
-    public void enterDash2(b2bParser.Dash2Context ctx) {
-        if(ctx.paths() != null){
-            String pathss = ctx.paths().getText();
-            if(pathss.endsWith("sh")){
-                pathss = pathss.substring(0, pathss.length() - 2) + "ps1";
-            }
-            pathss = pathss.replace('/','\\');
-            System.out.println(pathss);
-            cadena += "." + pathss;
-        }
-        if(ctx.command() != null){
-            cadena += "'" + ctx.command().getText();
-        }
-    }
-
-    @Override
-    public void exitDash2(b2bParser.Dash2Context ctx) {
-        if(ctx.command() != null){
-            cadena += "'";
-        }
-    }
-
-    @Override
-    public void enterDashargs(b2bParser.DashargsContext ctx) {
-        if(ctx.arg != null){
-            cadena += ctx.arg.getText() + " ";
         }
     }
 
@@ -271,10 +252,15 @@ public class Listener extends b2bBaseListener {
     @Override
     public void enterWhile1(b2bParser.While1Context ctx) {
         if(ctx.PR_while() != null){
-            cadena += "while (";
+            String whilee = ctx.PR_while().getText();
+            whilee = whilee.replace('[', '(');
+            whilee = whilee.replace(']', ')');
+            whilee = whilee.replace(';', '{');
+            cadena += whilee;
         }
     }
 
+    /*
     @Override
     public void exitWhile1(b2bParser.While1Context ctx) {
         if(ctx.PR_while() != null){
@@ -282,10 +268,12 @@ public class Listener extends b2bBaseListener {
         }
     }
 
+     */
+
     @Override
     public void enterWhile2(b2bParser.While2Context ctx) {
         if(ctx.PR_do() != null){
-            cadena += "{\n";
+            cadena += "\n";
         }
     }
 
@@ -319,7 +307,7 @@ public class Listener extends b2bBaseListener {
 
     @Override
     public void exitFor3(b2bParser.For3Context ctx) {
-        if(ctx.R_BR(0) != null && ctx.R_BR(1) != null){
+        if(ctx.R_BR(0) != null){
             cadena += ") ";
         }
     }
@@ -327,7 +315,7 @@ public class Listener extends b2bBaseListener {
     @Override
     public void enterFor4(b2bParser.For4Context ctx) {
         if(ctx.PR_do() != null){
-            cadena += "{\n";
+            cadena += ") {\n";
         }
     }
 
@@ -449,7 +437,7 @@ public class Listener extends b2bBaseListener {
             cadena += pathss;
         }
         if(ctx.ID() != null){
-            cadena += ctx.ID().getText();
+            cadena += "\\" + ctx.ID().getText();
         }
     }
 

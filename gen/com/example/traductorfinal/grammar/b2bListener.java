@@ -38,45 +38,15 @@ public interface b2bListener extends ParseTreeListener {
 	 */
 	void exitGramar_excecution(b2bParser.Gramar_excecutionContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link b2bParser#dash}.
+	 * Enter a parse tree produced by {@link b2bParser#bash}.
 	 * @param ctx the parse tree
 	 */
-	void enterDash(b2bParser.DashContext ctx);
+	void enterBash(b2bParser.BashContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link b2bParser#dash}.
+	 * Exit a parse tree produced by {@link b2bParser#bash}.
 	 * @param ctx the parse tree
 	 */
-	void exitDash(b2bParser.DashContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link b2bParser#dash1}.
-	 * @param ctx the parse tree
-	 */
-	void enterDash1(b2bParser.Dash1Context ctx);
-	/**
-	 * Exit a parse tree produced by {@link b2bParser#dash1}.
-	 * @param ctx the parse tree
-	 */
-	void exitDash1(b2bParser.Dash1Context ctx);
-	/**
-	 * Enter a parse tree produced by {@link b2bParser#dashargs}.
-	 * @param ctx the parse tree
-	 */
-	void enterDashargs(b2bParser.DashargsContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link b2bParser#dashargs}.
-	 * @param ctx the parse tree
-	 */
-	void exitDashargs(b2bParser.DashargsContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link b2bParser#dash2}.
-	 * @param ctx the parse tree
-	 */
-	void enterDash2(b2bParser.Dash2Context ctx);
-	/**
-	 * Exit a parse tree produced by {@link b2bParser#dash2}.
-	 * @param ctx the parse tree
-	 */
-	void exitDash2(b2bParser.Dash2Context ctx);
+	void exitBash(b2bParser.BashContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link b2bParser#echo}.
 	 * @param ctx the parse tree
@@ -117,6 +87,16 @@ public interface b2bListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitCat(b2bParser.CatContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link b2bParser#cd}.
+	 * @param ctx the parse tree
+	 */
+	void enterCd(b2bParser.CdContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link b2bParser#cd}.
+	 * @param ctx the parse tree
+	 */
+	void exitCd(b2bParser.CdContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link b2bParser#comments}.
 	 * @param ctx the parse tree

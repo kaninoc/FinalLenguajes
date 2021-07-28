@@ -52,49 +52,13 @@ public class b2bBaseListener implements b2bListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterDash(b2bParser.DashContext ctx) { }
+	@Override public void enterBash(b2bParser.BashContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitDash(b2bParser.DashContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterDash1(b2bParser.Dash1Context ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitDash1(b2bParser.Dash1Context ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterDashargs(b2bParser.DashargsContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitDashargs(b2bParser.DashargsContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterDash2(b2bParser.Dash2Context ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitDash2(b2bParser.Dash2Context ctx) { }
+	@Override public void exitBash(b2bParser.BashContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -143,6 +107,18 @@ public class b2bBaseListener implements b2bListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitCat(b2bParser.CatContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterCd(b2bParser.CdContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitCd(b2bParser.CdContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

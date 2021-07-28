@@ -18,7 +18,7 @@ command : gramar_excecution
         ;
 
 //GRAMMAR AND EXCECUTION
-gramar_excecution: dash
+gramar_excecution: bash
                  | echo
                  | read
                  | sleep
@@ -26,11 +26,8 @@ gramar_excecution: dash
                  | comments
                  | comment_lines
                  ;
-//dash
-dash: dash1 dash2 END_OF_LINE?;
-dash1: 'bash' dashargs*;
-dashargs: arg=('-c' | '-a' | '-s');
-dash2: (paths | '\'' command '\'')?;
+//bash
+bash: PR_bash END_OF_LINE?;
 
 //echo
 echo: PR_echo END_OF_LINE?;
@@ -39,13 +36,13 @@ echo: PR_echo END_OF_LINE?;
 read: PR_read ID END_OF_LINE?;
 
 //sleep
-sleep: PR_sleep (NUMERO | '$' ID) END_OF_LINE?;
+sleep: PR_sleep (NUMERO | ID) END_OF_LINE?;
 
 //cat
 cat: PR_cat GT? paths END_OF_LINE?;
 
 //cd
-cd: PR_cd ID '/';
+cd: PR_cd (ID '/' | opt=('..' | '.'));
 
 //comments
 comments: COMMENT END_OF_LINE?;
@@ -61,7 +58,8 @@ var: ID EQ value END_OF_LINE?;
 value: NUMERO
      | SQ_WORD
      | DQ_WORD
-     | '$'ID
+     | ID
+     | '$((' ID '+' NUMERO '))'
      ;
 
 //null
@@ -113,7 +111,7 @@ if4: (PR_else END_OF_LINE command*)? PR_fi END_OF_LINE?;
 
 //while
 b_while: while1 while2;
-while1: PR_while L_SQUAREBR arit_expr R_SQUAREBR SEMIC END_OF_LINE;
+while1: PR_while END_OF_LINE;
 while2: PR_do END_OF_LINE command* PR_done END_OF_LINE?;
 
 //for
@@ -147,11 +145,6 @@ remove: PR_remove paths END_OF_LINE?;
 directories: mkdir;
 
 mkdir: PR_mkdir OPMK? (DIR | ID) END_OF_LINE?;
-
-//PROCESSES AND ENVIRONMENT
-//LIBRARIES AND NAMESPACES
-//REFLECTION
-//DEBUGGING AND PROFILING
 
 paths: PATH_FILE | FILENAME;
 /*
@@ -213,7 +206,7 @@ PR_time: 'time';
 PR_for: 'for';
 PR_in: 'in';
 PR_until: 'until';
-PR_while: 'while';
+PR_while: 'while' ~[\n]*;
 PR_do: 'do';
 PR_done: 'done';
 
@@ -229,6 +222,7 @@ PR_true: 'true';
 PR_false: 'false';
 PR_null: '\'\'';
 PR_echo: 'echo' ~[\n]*;
+PR_bash: 'bash' ~[\n]*;
 PR_read: 'read';
 PR_sleep: 'sleep';
 PR_cat: 'cat';
@@ -245,9 +239,9 @@ END_OF_LINE: [\n];
 //WORDS
 
 NUMERO: [0-9]+([.][0-9]+)?;
-ID: [a-zA-Z][a-zA-Z0-9_]*;
-DIR: ('/'[a-zA-Z][a-zA-Z0-9_]*)*[a-zA-Z0-9]+;
-PATH_FILE: ('/'[a-zA-Z][a-zA-Z0-9_]*)+[.][a-zA-Z0-9]+;
+ID: [a-zA-Z$][a-zA-Z0-9_]*;
+DIR: ([a-zA-Z$][a-zA-Z0-9_$]*'/')*[a-zA-Z0-9]+;
+PATH_FILE: ([a-zA-Z][a-zA-Z0-9_]*'/')+[.][a-zA-Z0-9]+;
 FILENAME: [a-zA-Z][a-zA-Z0-9_]*[.][a-zA-Z0-9]+; //donde se requiere un filename poner (filename | id)?
 SQ_WORD: '\'' ( '\\"' | . )*? '\'' ;
 DQ_WORD: '"' ( '\\"' | . )*? '"' ;
