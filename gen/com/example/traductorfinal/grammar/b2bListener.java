@@ -58,16 +58,6 @@ public interface b2bListener extends ParseTreeListener {
 	 */
 	void exitDash1(b2bParser.Dash1Context ctx);
 	/**
-	 * Enter a parse tree produced by {@link b2bParser#dash2}.
-	 * @param ctx the parse tree
-	 */
-	void enterDash2(b2bParser.Dash2Context ctx);
-	/**
-	 * Exit a parse tree produced by {@link b2bParser#dash2}.
-	 * @param ctx the parse tree
-	 */
-	void exitDash2(b2bParser.Dash2Context ctx);
-	/**
 	 * Enter a parse tree produced by {@link b2bParser#dashargs}.
 	 * @param ctx the parse tree
 	 */
@@ -77,6 +67,16 @@ public interface b2bListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitDashargs(b2bParser.DashargsContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link b2bParser#dash2}.
+	 * @param ctx the parse tree
+	 */
+	void enterDash2(b2bParser.Dash2Context ctx);
+	/**
+	 * Exit a parse tree produced by {@link b2bParser#dash2}.
+	 * @param ctx the parse tree
+	 */
+	void exitDash2(b2bParser.Dash2Context ctx);
 	/**
 	 * Enter a parse tree produced by {@link b2bParser#echo}.
 	 * @param ctx the parse tree
@@ -207,6 +207,126 @@ public interface b2bListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitLogical_operators(b2bParser.Logical_operatorsContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code MultDivExpr}
+	 * labeled alternative in {@link b2bParser#arit_expr}.
+	 * @param ctx the parse tree
+	 */
+	void enterMultDivExpr(b2bParser.MultDivExprContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code MultDivExpr}
+	 * labeled alternative in {@link b2bParser#arit_expr}.
+	 * @param ctx the parse tree
+	 */
+	void exitMultDivExpr(b2bParser.MultDivExprContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code AndExpr}
+	 * labeled alternative in {@link b2bParser#arit_expr}.
+	 * @param ctx the parse tree
+	 */
+	void enterAndExpr(b2bParser.AndExprContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code AndExpr}
+	 * labeled alternative in {@link b2bParser#arit_expr}.
+	 * @param ctx the parse tree
+	 */
+	void exitAndExpr(b2bParser.AndExprContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code NumExpr}
+	 * labeled alternative in {@link b2bParser#arit_expr}.
+	 * @param ctx the parse tree
+	 */
+	void enterNumExpr(b2bParser.NumExprContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code NumExpr}
+	 * labeled alternative in {@link b2bParser#arit_expr}.
+	 * @param ctx the parse tree
+	 */
+	void exitNumExpr(b2bParser.NumExprContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code MenosExpr}
+	 * labeled alternative in {@link b2bParser#arit_expr}.
+	 * @param ctx the parse tree
+	 */
+	void enterMenosExpr(b2bParser.MenosExprContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code MenosExpr}
+	 * labeled alternative in {@link b2bParser#arit_expr}.
+	 * @param ctx the parse tree
+	 */
+	void exitMenosExpr(b2bParser.MenosExprContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code VarExpr}
+	 * labeled alternative in {@link b2bParser#arit_expr}.
+	 * @param ctx the parse tree
+	 */
+	void enterVarExpr(b2bParser.VarExprContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code VarExpr}
+	 * labeled alternative in {@link b2bParser#arit_expr}.
+	 * @param ctx the parse tree
+	 */
+	void exitVarExpr(b2bParser.VarExprContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code ParentExpr}
+	 * labeled alternative in {@link b2bParser#arit_expr}.
+	 * @param ctx the parse tree
+	 */
+	void enterParentExpr(b2bParser.ParentExprContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code ParentExpr}
+	 * labeled alternative in {@link b2bParser#arit_expr}.
+	 * @param ctx the parse tree
+	 */
+	void exitParentExpr(b2bParser.ParentExprContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code CompExpr}
+	 * labeled alternative in {@link b2bParser#arit_expr}.
+	 * @param ctx the parse tree
+	 */
+	void enterCompExpr(b2bParser.CompExprContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code CompExpr}
+	 * labeled alternative in {@link b2bParser#arit_expr}.
+	 * @param ctx the parse tree
+	 */
+	void exitCompExpr(b2bParser.CompExprContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code BooleanExpr}
+	 * labeled alternative in {@link b2bParser#arit_expr}.
+	 * @param ctx the parse tree
+	 */
+	void enterBooleanExpr(b2bParser.BooleanExprContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code BooleanExpr}
+	 * labeled alternative in {@link b2bParser#arit_expr}.
+	 * @param ctx the parse tree
+	 */
+	void exitBooleanExpr(b2bParser.BooleanExprContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code SumResExpr}
+	 * labeled alternative in {@link b2bParser#arit_expr}.
+	 * @param ctx the parse tree
+	 */
+	void enterSumResExpr(b2bParser.SumResExprContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code SumResExpr}
+	 * labeled alternative in {@link b2bParser#arit_expr}.
+	 * @param ctx the parse tree
+	 */
+	void exitSumResExpr(b2bParser.SumResExprContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code OrExpr}
+	 * labeled alternative in {@link b2bParser#arit_expr}.
+	 * @param ctx the parse tree
+	 */
+	void enterOrExpr(b2bParser.OrExprContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code OrExpr}
+	 * labeled alternative in {@link b2bParser#arit_expr}.
+	 * @param ctx the parse tree
+	 */
+	void exitOrExpr(b2bParser.OrExprContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link b2bParser#execution_control}.
 	 * @param ctx the parse tree
@@ -368,16 +488,6 @@ public interface b2bListener extends ParseTreeListener {
 	 */
 	void exitFor4(b2bParser.For4Context ctx);
 	/**
-	 * Enter a parse tree produced by {@link b2bParser#expr}.
-	 * @param ctx the parse tree
-	 */
-	void enterExpr(b2bParser.ExprContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link b2bParser#expr}.
-	 * @param ctx the parse tree
-	 */
-	void exitExpr(b2bParser.ExprContext ctx);
-	/**
 	 * Enter a parse tree produced by {@link b2bParser#files}.
 	 * @param ctx the parse tree
 	 */
@@ -427,4 +537,34 @@ public interface b2bListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitRemove(b2bParser.RemoveContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link b2bParser#directories}.
+	 * @param ctx the parse tree
+	 */
+	void enterDirectories(b2bParser.DirectoriesContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link b2bParser#directories}.
+	 * @param ctx the parse tree
+	 */
+	void exitDirectories(b2bParser.DirectoriesContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link b2bParser#mkdir}.
+	 * @param ctx the parse tree
+	 */
+	void enterMkdir(b2bParser.MkdirContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link b2bParser#mkdir}.
+	 * @param ctx the parse tree
+	 */
+	void exitMkdir(b2bParser.MkdirContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link b2bParser#paths}.
+	 * @param ctx the parse tree
+	 */
+	void enterPaths(b2bParser.PathsContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link b2bParser#paths}.
+	 * @param ctx the parse tree
+	 */
+	void exitPaths(b2bParser.PathsContext ctx);
 }

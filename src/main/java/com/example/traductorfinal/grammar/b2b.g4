@@ -14,6 +14,7 @@ command : gramar_excecution
         | variables_expressions
         | arithmetic_logic
         | files
+        | directories
         ;
 
 //GRAMMAR AND EXCECUTION
@@ -28,8 +29,8 @@ gramar_excecution: dash
 //dash
 dash: dash1 dash2 END_OF_LINE?;
 dash1: 'bash' dashargs*;
-dash2: (FILENAME | '\'' command '\'')?;
 dashargs: arg=('-c' | '-a' | '-s');
+dash2: (paths | '\'' command '\'')?;
 
 //echo
 echo: PR_echo END_OF_LINE?;
@@ -38,10 +39,13 @@ echo: PR_echo END_OF_LINE?;
 read: PR_read ID END_OF_LINE?;
 
 //sleep
-sleep: PR_sleep NUMERO END_OF_LINE?;
+sleep: PR_sleep (NUMERO | '$' ID) END_OF_LINE?;
 
 //cat
-cat: PR_cat GT? FILENAME END_OF_LINE?;
+cat: PR_cat GT? paths END_OF_LINE?;
+
+//cd
+cd: PR_cd ID '/';
 
 //comments
 comments: COMMENT END_OF_LINE?;
@@ -77,21 +81,17 @@ logical_operators: AND
                  | NOT
                  ;
 //value arit_expr
-/*
-arit_expr:    NEG arit_expr                                                                                 #NegExpr
-            | arit_expr op=(MULT | DIV | MOD) arit_expr                                                     #MultDivExpr
-            | MENOS arit_expr                                                                               #MenosExpr
-            | arit_expr op=(MAS | MENOS) arit_expr                                                          #SumResExpr
-            | arit_expr op=(MENOR | MAYOR | MENOR_IGUAL | MAYOR_IGUAL) arit_expr                            #CompExpr
-            | arit_expr op=(IGUAL | DIF) arit_expr                                                          #EqExpr
-            | arit_expr AND arit_expr                                                                       #AndExpr
-            | arit_expr OR arit_expr                                                                        #OrExpr
-            | op=(ENTERO | REAL | CHAR | STRING | PR_verdadero | PR_falso)                                  #NumExpr
-            | var                                                                                           #VarExpr
-            | callfun                                                                                       #FunExpr
-            | PAR_IZQ arit_expr PAR_DER                                                                     #ParentExpr
+arit_expr:    arit_expr op=(MULT | DIV | MOD) arit_expr            #MultDivExpr
+            | MENOS arit_expr                                      #MenosExpr
+            | arit_expr op=(MAS | MENOS) arit_expr                 #SumResExpr
+            | arit_expr op=(LT | GT | LOET | GOET) arit_expr       #CompExpr
+            | arit_expr AND arit_expr                              #AndExpr
+            | arit_expr OR arit_expr                               #OrExpr
+            | op=(NUMERO | SQ_WORD | DQ_WORD | ID)                 #NumExpr
+            | var                                                  #VarExpr
+            | L_BR arit_expr R_BR                                  #ParentExpr
+            | boolean_val                                          #BooleanExpr
             ;
-*/
 
 //STRINGS
 //REGEX
@@ -104,29 +104,24 @@ execution_control: b_if
                  ;
 //if
 b_if: if1 if2 if3 if4;
-if1: PR_if L_SQUAREBR command R_SQUAREBR SEMIC;
-if2: PR_then END_OF_LINE command;
+if1: PR_if L_SQUAREBR arit_expr R_SQUAREBR SEMIC;
+if2: PR_then END_OF_LINE command*;
 if3: (if3a if3b)*;
-if3a: PR_elif L_SQUAREBR command R_SQUAREBR SEMIC;
-if3b: PR_then END_OF_LINE command;
-if4: (PR_else END_OF_LINE command)? PR_fi END_OF_LINE?;
+if3a: PR_elif L_SQUAREBR arit_expr R_SQUAREBR SEMIC;
+if3b: PR_then END_OF_LINE command*;
+if4: (PR_else END_OF_LINE command*)? PR_fi END_OF_LINE?;
 
 //while
 b_while: while1 while2;
-while1: PR_while L_SQUAREBR command R_SQUAREBR SEMIC END_OF_LINE;
-while2: PR_do END_OF_LINE command+ PR_done END_OF_LINE?;
+while1: PR_while L_SQUAREBR arit_expr R_SQUAREBR SEMIC END_OF_LINE;
+while2: PR_do END_OF_LINE command* PR_done END_OF_LINE?;
 
 //for
 b_for: for1 for2 for3 for4;
-for1: PR_for L_BR L_BR expr SEMIC;
-for2: expr SEMIC;
-for3: expr R_BR R_BR END_OF_LINE;
+for1: PR_for L_BR L_BR arit_expr SEMIC;
+for2: arit_expr SEMIC;
+for3: arit_expr R_BR R_BR END_OF_LINE;
 for4: PR_do END_OF_LINE command* PR_done END_OF_LINE?;
-
-expr: command
-    |
-    ; //esto toca arreglarlo lol,
-    // en general lo que se admite en los bucles/condicionales :/
 
 //FILES
 files: touch
@@ -136,25 +131,29 @@ files: touch
      ;
 
 //touch
-touch: PR_touch FILENAME END_OF_LINE?;
+touch: PR_touch paths END_OF_LINE?;
 
 //filezise
-file_size: PR_file_ls FILENAME END_OF_LINE?;
+file_size: PR_file_ls paths END_OF_LINE?;
 
 //copy or rename file
-copy_rename: opt=('cp' | 'mv') FILENAME FILENAME END_OF_LINE?;
+copy_rename: opt=('cp' | 'mv') paths paths END_OF_LINE?;
 
 //remove file
-remove: PR_remove FILENAME END_OF_LINE?;
+remove: PR_remove paths END_OF_LINE?;
 //el token FILENAME DEBE emparejar tambien rutas de archivos
 
 //DIRECTORIES
+directories: mkdir;
+
+mkdir: PR_mkdir OPMK? (DIR | ID) END_OF_LINE?;
 
 //PROCESSES AND ENVIRONMENT
 //LIBRARIES AND NAMESPACES
 //REFLECTION
 //DEBUGGING AND PROFILING
 
+paths: PATH_FILE | FILENAME;
 /*
                         ANALISIS LEXICO(LEXER)
 
@@ -165,6 +164,7 @@ remove: PR_remove FILENAME END_OF_LINE?;
 
 //TOKENS
 
+OPMK: '-p ~';
 OR: '||';
 AND: '&&';
 AMP: '&';
@@ -187,6 +187,11 @@ NE: '!=';
 GOET: '>=';
 LOET: '<=';
 NOT: '!';
+MULT: '*';
+DIV: '/';
+MOD: '%';
+MAS: '+';
+MENOS: '-';
 
 //quotes
 DOUBLE_QUOTE: '"';
@@ -230,6 +235,8 @@ PR_cat: 'cat';
 PR_touch: 'touch';
 PR_file_ls:'ls -l';
 PR_remove:'rm';
+PR_mkdir: 'mkdir';
+PR_cd: 'cd';
 END_OF_LINE: [\n];
 
 //REGLAS LEXICAS (Poner más arriba las reglas menos genericas o que menos matches tienen)
@@ -239,7 +246,9 @@ END_OF_LINE: [\n];
 
 NUMERO: [0-9]+([.][0-9]+)?;
 ID: [a-zA-Z][a-zA-Z0-9_]*;
-FILENAME: [a-zA-Z][a-zA-Z0-9_]*[.][a-zA-Z0-9]+;
+DIR: ('/'[a-zA-Z][a-zA-Z0-9_]*)*[a-zA-Z0-9]+;
+PATH_FILE: ('/'[a-zA-Z][a-zA-Z0-9_]*)+[.][a-zA-Z0-9]+;
+FILENAME: [a-zA-Z][a-zA-Z0-9_]*[.][a-zA-Z0-9]+; //donde se requiere un filename poner (filename | id)?
 SQ_WORD: '\'' ( '\\"' | . )*? '\'' ;
 DQ_WORD: '"' ( '\\"' | . )*? '"' ;
 COMMENT: '#' ~[\r\n]*;
